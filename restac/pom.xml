@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.fraunhofer.fokus</groupId>
+	<artifactId>restac</artifactId>
+	<version>1.0.0</version>
+	<name>RESTAC</name>
+	<description>RESTAC is a peer-to-peer Java framework implementing REST.</description>
+	<organization>
+		<name>Fraunhofer FOKUS</name>
+		<url>http://www.fokus.fraunhofer.de</url>
+	</organization>
+	<inceptionYear>2007</inceptionYear>
+	<contributors>
+		<contributor>
+			<name>David Linner</name>
+			<email>david.linner@fokus.fraunhofer.de</email>
+			<roles>
+				<role>Owner</role>
+			</roles>
+		</contributor>
+		<contributor>
+			<name>Anna Kress</name>
+			<roles>
+				<role>Owner</role>
+			</roles>
+		</contributor>
+	</contributors>
+	<developers>
+		<developer>
+			<name>Phillip Abromeit</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Murat Ates</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.8</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
