@@ -98,7 +98,7 @@ public class Path {
 	 * @return 	<code>List</code> of <code>String</code>, which contains the elements 
 	 * 			of the path
 	 */
-	public List getTokens() {
+	public List<?> getTokens() {
 		return tokens;
 	} // getTokens()
 

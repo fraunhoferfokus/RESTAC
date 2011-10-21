@@ -102,9 +102,9 @@ public class HTTPXActionMessageTransceiver {
 					HTTPXManagedActionMessageDispatcher managedDispatcher = null;
 					
 					try {
-						Class managedDefinition = HTTPXActionMessageTransceiver.class.getClassLoader().loadClass(className);
+						Class<?> managedDefinition = HTTPXActionMessageTransceiver.class.getClassLoader().loadClass(className);
 						//get the parameterized constructor
-						Constructor constructor = managedDefinition.getConstructor(HTTPXActionMessageDispatcher.class);
+						Constructor<?> constructor = managedDefinition.getConstructor(HTTPXActionMessageDispatcher.class);
 						String key = ((String)element.getKey()).toLowerCase();
 						//Create the object
 						if (key.startsWith(strBoth)) {

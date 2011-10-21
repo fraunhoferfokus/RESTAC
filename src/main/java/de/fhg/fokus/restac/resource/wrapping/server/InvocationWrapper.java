@@ -125,15 +125,15 @@ public class InvocationWrapper implements Node, Put, Post, Get, Head {
 	 * @return 		a new node wrapping another object and the passed name as method-identifier   
 	 */
 	public Node getChild(String name) {
-		Class cls = object.getClass();
+		Class<?> cls = object.getClass();
 		try {
-			Method method = cls.getMethod(WrapperConstants.PREFIX_GET + token, null);
+			Method method = cls.getMethod(WrapperConstants.PREFIX_GET + token, new Class<?>[0]);
 			
 			if (method != null && method.isAnnotationPresent(RestResourceMethod.class)){
 				if (method.getReturnType().isPrimitive()){
 					return null;
 				} else {
-					return new InvocationWrapper(this, method.invoke(object, null), name);
+					return new InvocationWrapper(this, method.invoke(object, new Object[0]), name);
 				}
 			} else {
 				LOGGER.warn("Requested method '" + WrapperConstants.PREFIX_GET + name + "()' could not be retrieved.");				
@@ -170,7 +170,7 @@ public class InvocationWrapper implements Node, Put, Post, Get, Head {
 		}
 		
 		Resource resource = null;
-		Class [] classes = getResourceInterfaces(object.getClass(), token);
+		Class<?> [] classes = getResourceInterfaces(object.getClass(), token);
 		
 		if (classes != null){
 			resource = (Resource)Proxy.newProxyInstance(
@@ -197,9 +197,9 @@ public class InvocationWrapper implements Node, Put, Post, Get, Head {
 	 * 
 	 * @return The array of interfaces the resource needs to implement.
 	 */
-	private Class[] getResourceInterfaces(Class cls, String name){
+	private Class<?>[] getResourceInterfaces(Class<?> cls, String name){
 		
-		Set<Class> interfaces = new HashSet<Class>();
+		Set<Class<?>> interfaces = new HashSet<Class<?>>();
 		Method [] methods = cls.getMethods(); 
 		for (int i = 0; i < methods.length; i++){
 			if (methods[i].getName().equals(WrapperConstants.PREFIX_GET + name) && 
@@ -234,7 +234,7 @@ public class InvocationWrapper implements Node, Put, Post, Get, Head {
 		Vector<Object> parsedParams; 
 		
 		// get possible type combinations
-		Class[][] options = getTypeSet(methodName, object.getClass()); 
+		Class<?>[][] options = getTypeSet(methodName, object.getClass()); 
 		// get a list of name-value maps, wherein each map represents a certain instance 
 		Map<String, String> [] separated = splitByNamePrefix(params);
 
@@ -349,8 +349,8 @@ public class InvocationWrapper implements Node, Put, Post, Get, Head {
 	 * @return				list of parameter types of the overloaded implementations
 	 * 						of the method identified by the name
 	 */
-	private Class[][] getTypeSet(String methodName, Class cls){
-		Vector<Class[]> result = new Vector<Class[]>();
+	private Class<?>[][] getTypeSet(String methodName, Class<? extends Object> cls){
+		Vector<Class<?>[]> result = new Vector<Class<?>[]>();
 		Method [] methods = cls.getMethods();
 		for (int i = 0; i < methods.length; i++){
 			if (methods[i].getName().equals(methodName) && methods[i].isAnnotationPresent(RestResourceMethod.class)){

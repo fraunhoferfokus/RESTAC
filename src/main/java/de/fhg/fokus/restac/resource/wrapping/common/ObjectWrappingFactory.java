@@ -107,8 +107,8 @@ public class ObjectWrappingFactory {
 	 * @param objClass	the interface class of the object
 	 * @return			a client side object wrapper
 	 */ 
-	public Object getObjectWrapper(URL url, Class iface) { 
- 		Class[] ifaces  = {iface};
+	public Object getObjectWrapper(URL url, Class<?> iface) { 
+ 		Class<?>[] ifaces  = {iface};
 		ClassLoader	cloader = iface.getClassLoader();
 		Object proxy = Proxy.newProxyInstance(cloader, ifaces, new RestRemoteInvocationHandler(url, 
 				transceiver.getOutboundDispatcher()));

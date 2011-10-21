@@ -184,7 +184,7 @@ public abstract class ResourceMessageHandler implements HTTPXSynActionMessageHan
 						responseStatus = HTTPStatus.OK;
 					}else {
 						// header field 'Allowed' must be set, when status code 405
-						Class[] interfaces = resource.getClass().getInterfaces(); // get implemented inferfaces
+						Class<?>[] interfaces = resource.getClass().getInterfaces(); // get implemented inferfaces
 						String allowedMethods = null;
 						for(int i = 0; i < interfaces.length; i++) {
 							if(allowedMethods != null) allowedMethods += ",";

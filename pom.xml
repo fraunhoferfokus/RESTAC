@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.fraunhofer.fokus</groupId>
 	<artifactId>restac</artifactId>
-	<version>1.0.0</version>
+	<version>1.1</version>
 	<name>RESTAC</name>
 	<description>RESTAC is a peer-to-peer Java framework implementing REST.</description>
 	<organization>

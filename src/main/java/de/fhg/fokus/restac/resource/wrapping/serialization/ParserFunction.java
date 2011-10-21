@@ -56,13 +56,13 @@ public class ParserFunction {
 	private static ParserFunction instance = new ParserFunction();
 	
 	/** The map of registered parsers. */
-	private Map<Class, Parser> parsers; 
+	private Map<Class<?>, Parser> parsers; 
 	
 	/**
 	 * Constructs a new empty <code>ParserFunction</code>.
 	 */
 	private ParserFunction(){
-		parsers = Collections.synchronizedMap(new HashMap<Class, Parser>());
+		parsers = Collections.synchronizedMap(new HashMap<Class<?>, Parser>());
 	}
 	
 	/**
@@ -81,7 +81,7 @@ public class ParserFunction {
 	 * @return 				true if it is possible to assemble an object of the given 
 	 * 						type, false otherwise
 	 */
-	public boolean isParseable(Class expectedType){
+	public boolean isParseable(Class<?> expectedType){
 		Parser parser = parsers.get(expectedType);
 		if (parser != null || expectedType.isArray())	return true;
 		return false;
@@ -94,7 +94,7 @@ public class ParserFunction {
 	 * @param values		name-value pairs to be assembled to an object
 	 * @return 				the object or null if parsing failed
 	 */
-	public Object parse(Class expectedType, Map<String, String> values){
+	public Object parse(Class<?> expectedType, Map<String, String> values){
 		Parser primitiveParser = parsers.get(expectedType);
 		if (primitiveParser != null){
 			return primitiveParser.parse(values);
@@ -137,7 +137,7 @@ public class ParserFunction {
 	 * @param type		type of the parser
 	 * @param parser	the parser to be added
 	 */
-	public void addParser(Class type, Parser parser){
+	public void addParser(Class<?> type, Parser parser){
 		parsers.put(type, parser);
 	}
 	
@@ -400,7 +400,7 @@ public class ParserFunction {
 		 * @return the assembled <code>Map</code> object
 		 * @throws Exception creating an instance of the expected type failed
 		 */
-		public Object parse(Class expectedType, Map<String, String> values) throws Exception {
+		public Object parse(Class<?> expectedType, Map<String, String> values) throws Exception {
 			Map<String, String> map;
 			if (expectedType == java.util.Map.class) 
 				map = new HashMap<String, String>();
@@ -432,7 +432,7 @@ public class ParserFunction {
 		 * @return the assembled <code>List</code> object
 		 * @throws Exception creating an instance of the expected type failed
 		 */
-		public Object parse(Class expectedType, Map<String, String> values) throws Exception {
+		public Object parse(Class<?> expectedType, Map<String, String> values) throws Exception {
 			List<String> list;
 			if(expectedType == java.util.List.class) 
 				list = new ArrayList<String>();
@@ -462,7 +462,7 @@ public class ParserFunction {
 			 * @return the assembled <code>Set</code> object
 			 * @throws Exception creating an instance of the expected type failed
 			 */
-			public Object parse(Class expectedType, Map<String, String> values) throws Exception {
+			public Object parse(Class<?> expectedType, Map<String, String> values) throws Exception {
 				Set<String> set;
 				if(expectedType == java.util.Set.class) 
 					set = new HashSet<String>();
@@ -494,11 +494,11 @@ public class ParserFunction {
 		 * @param nameValueMap	the name-value map to parse from
 		 * @return 				the assembled object
 		 */
-		public Object parse(Class expectedType, Map<String, String> nameValueMap) throws Exception {
+		public Object parse(Class<?> expectedType, Map<String, String> nameValueMap) throws Exception {
 			
 			//check if names of name-value pairs match the required pattern
 			Pattern arrayPattern = Pattern.compile("(\\w*\\.?\\w*)(\\[\\d+\\])+");
-			Class arrayElementType = expectedType.getComponentType();
+			Class<?> arrayElementType = expectedType.getComponentType();
 			for(Iterator<String> iter = nameValueMap.keySet().iterator(); iter.hasNext();) {
 				String name = iter.next();
 				if (!arrayPattern.matcher(name).matches())

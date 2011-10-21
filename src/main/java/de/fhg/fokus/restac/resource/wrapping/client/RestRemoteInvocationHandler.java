@@ -102,7 +102,7 @@ import de.fhg.fokus.restac.resource.wrapping.serialization.SerializerFunction;
 	 	 * @param resultType	the result type of the method
 	 	 * @return				the result of the method invocation
 	 	 */		 
-		private Object invoke(String method, Object[] arguments, Class resultType) throws InvocationException {
+		private Object invoke(String method, Object[] arguments, Class<?> resultType) throws InvocationException {
 	  		//ResourceProxy resource = null;
 	  		Map<String, String> allParams = new HashMap<String, String>();
 	  		Map<String, String> param;
@@ -115,7 +115,7 @@ import de.fhg.fokus.restac.resource.wrapping.serialization.SerializerFunction;
 				prefix++;
 			}
 
-			Map<String, String> responseContent = new HashMap();
+			Map<String, String> responseContent = new HashMap<String, String>();
 			ParameterList paramQuery = new ParameterList();
 				// hässliches "casten" ...
 				for(Iterator<String> iter = allParams.keySet().iterator(); iter.hasNext();) {

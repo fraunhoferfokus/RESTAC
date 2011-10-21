@@ -55,13 +55,13 @@ public class SerializerFunction {
 	private static SerializerFunction instance = new SerializerFunction();
 	
 	/** The map of registered serializers. */
-	private Map<Class, Serializer> serializers; 
+	private Map<Class<?>, Serializer> serializers; 
 	
 	/**
 	 * Constructs a new empty <code>SerializerFunction</code>.
 	 */
 	private SerializerFunction(){
-		serializers = Collections.synchronizedMap(new HashMap<Class, Serializer>());
+		serializers = Collections.synchronizedMap(new HashMap<Class<?>, Serializer>());
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public class SerializerFunction {
 	 * @param preferredType 	type that indicates a pattern for serialization
 	 * @return true 			if a serialization is possible, false otherwise
 	 */
-	public boolean isSerializable(Class preferredType){
+	public boolean isSerializable(Class<?> preferredType){
 		Serializer serializer = serializers.get(preferredType);
 		if (serializer != null || preferredType.isArray())	return true;
 		return false;
@@ -92,7 +92,7 @@ public class SerializerFunction {
 	 * @param obj 			an instance to serialize
 	 * @return				the serialization of the object
 	 */
-	public Map<String, String> serialize(Class preferredType, Object obj){
+	public Map<String, String> serialize(Class<?> preferredType, Object obj){
 		Serializer serializer = serializers.get(preferredType);
 		if (serializer != null){
 			return serializer.serialize(obj);
@@ -127,7 +127,7 @@ public class SerializerFunction {
 	 * @param type			the type of the object
 	 * @param serializer	the serializer to be added
 	 */
-	public void addSerializer(Class type, Serializer serializer){
+	public void addSerializer(Class<?> type, Serializer serializer){
 		serializers.put(type, serializer);
 	}
 	
@@ -223,7 +223,7 @@ public class SerializerFunction {
 	    		 
 	    		for (int i=0;i<Array.getLength(array);++i) {
 	    			Object element=Array.get(array,i);
-	    			Class cls=element.getClass();
+	    			Class<?> cls=element.getClass();
 	    			String new_name=name+"["+i+"]";
 	    			if (cls.isArray()) {
 	    			serializeArray(element,result,new_name);
@@ -261,10 +261,10 @@ public class SerializerFunction {
 	    	 * @return			a name-value map representing the map
 	    	 */
 	    	public Map<String, String> serialize(Object object) {
-	    		Map map = (Map)object;
+	    		Map<?, ?> map = (Map<?, ?>) object;
 	    		Map<String, String> result = new HashMap<String, String>();
-	    		for (Iterator iter=map.entrySet().iterator();iter.hasNext();) {
-	    			Map.Entry entry=(Map.Entry)iter.next();
+	    		for (Iterator<?> iter=map.entrySet().iterator();iter.hasNext();) {
+	    			Map.Entry<?, ?> entry=(Map.Entry<?, ?>)iter.next();
 	    			result.put(entry.getKey().toString(),entry.getValue().toString());
 	    		}
 				return result;
@@ -286,9 +286,9 @@ public class SerializerFunction {
 	    	 * @return			a name-value map representing the list
 	    	 */
 	    	public Map<String, String> serialize(Object object) {
-	    		List list = (List)object;
+	    		List<?> list = (List<?>)object;
 	    		Map<String, String> result = new HashMap<String, String>();
-	    		for (Iterator iter=list.iterator();iter.hasNext();) {
+	    		for (Iterator<?> iter=list.iterator();iter.hasNext();) {
 	    			Object element=iter.next();
 	    			result.put("list",element.toString());
 	    		}
@@ -311,9 +311,9 @@ public class SerializerFunction {
 	    	 * @return			a name-value map representing the set
 	    	 */
 	    	public Map<String, String> serialize(Object object) {
-	    		Set set = (Set)object;
+	    		Set<?> set = (Set<?>)object;
 	    		Map<String, String> result = new HashMap<String, String>();
-	    		for (Iterator iter=set.iterator();iter.hasNext();) {
+	    		for (Iterator<?> iter=set.iterator();iter.hasNext();) {
 	    			Object element=iter.next();
 	    			result.put("set",element.toString());
 	    		}
